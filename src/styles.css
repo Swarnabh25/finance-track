@@ -1,0 +1,56 @@
+/* styles.css */
+
+body {
+    background-color: #1a1a1a; /* Dark background color */
+    color: #ffffff; /* Text color */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .dark-theme {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .content {
+    max-width: 800px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* TransactionHistory.js */
+  
+  .transaction-history-container {
+    margin-top: 20px;
+  }
+  
+  /* BudgetTracker.js */
+  
+  .budget-tracker-container {
+    margin-top: 20px;
+  }
+  
+  /* Add any additional styling for your components */
+  
+  /* Add animations */
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  

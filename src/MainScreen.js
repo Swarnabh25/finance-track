@@ -1,21 +1,16 @@
-// In MainScreen.js
+// MainScreen.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TransactionHistory from './TransactionHistory';
 import BudgetTracker from './BudgetTracker';
+import './styles.css'; // Import the styles
 
 const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  /* Add any specific styles if needed */
 `;
 
 const MainContent = styled.div`
-  max-width: 800px;
-  width: 100%;
-  margin-top: 20px;
+  /* Add any specific styles if needed */
 `;
 
 const MainScreen = () => {
@@ -27,16 +22,14 @@ const MainScreen = () => {
   };
 
   return (
-    <MainContainer>
+    <MainContainer className="container dark-theme">
       <h2>Welcome to Finance Tracker!</h2>
-      <MainContent>
+      <MainContent className="content fade-in">
         {/* Transaction History */}
         <TransactionHistory updateNetAssets={updateNetAssets} />
 
         {/* Budget Tracker */}
-        <BudgetTracker netAssets={netAssets} />
-
-        {/* ... (Other components) */}
+        <BudgetTracker netAssets={netAssets} />        
       </MainContent>
     </MainContainer>
   );
