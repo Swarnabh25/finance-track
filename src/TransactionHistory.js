@@ -6,20 +6,40 @@ const TransactionHistoryContainer = styled.div`
   margin-top: 20px;
 `;
 
-const TransactionHistory = () => {
-  // State for managing transaction input pop-up
+const TransactionHistory = ({ updateNetAssets }) => {
   const [showPopup, setShowPopup] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+
   const [transactionAmount, setTransactionAmount] = useState(0);
   const [transactionDescription, setTransactionDescription] = useState('');
+  const [transactionNote, setTransactionNote] = useState('');
+  const [transactionType, setTransactionType] = useState('credit');
 
-  // Function to handle opening/closing the pop-up
   const togglePopup = () => setShowPopup(!showPopup);
 
-  // Function to handle adding a transaction
   const addTransaction = () => {
-    // Implement logic to add the transaction to the backend or state
-    // For now, just log the details
-    console.log(`Added Transaction: ${transactionAmount} - ${transactionDescription}`);
+    const newTransaction = {
+      type: transactionType,
+      amount: transactionAmount,
+      description: transactionDescription,
+      note: transactionNote,
+    };
+
+    // Update net assets based on the transaction type
+    if (transactionType === 'credit') {
+      updateNetAssets(transactionAmount); // Update net assets by adding the credit amount
+    } else {
+      updateNetAssets(-transactionAmount); // Update net assets by subtracting the debit amount
+    }
+
+    // Update the transaction history
+    setTransactions([...transactions, newTransaction]);
+
+    // Reset input fields
+    setTransactionAmount(0);
+    setTransactionDescription('');
+    setTransactionNote('');
+
     // Close the pop-up after adding the transaction
     togglePopup();
   };
@@ -27,12 +47,21 @@ const TransactionHistory = () => {
   return (
     <TransactionHistoryContainer>
       <h3>Transaction History</h3>
-      {/* Button to open the transaction input pop-up */}
       <button onClick={togglePopup}>Add Transaction</button>
 
       {/* Pop-up for adding a transaction */}
       {showPopup && (
         <div>
+          <label htmlFor="transactionType">Transaction Type: </label>
+          <select
+            id="transactionType"
+            value={transactionType}
+            onChange={(e) => setTransactionType(e.target.value)}
+          >
+            <option value="credit">Credit</option>
+            <option value="debit">Debit</option>
+          </select>
+
           <label htmlFor="transactionAmount">Amount: $</label>
           <input
             type="number"
@@ -49,12 +78,26 @@ const TransactionHistory = () => {
             onChange={(e) => setTransactionDescription(e.target.value)}
           />
 
+          <label htmlFor="transactionNote">Note: </label>
+          <input
+            type="text"
+            id="transactionNote"
+            value={transactionNote}
+            onChange={(e) => setTransactionNote(e.target.value)}
+          />
+
           <button onClick={addTransaction}>Add</button>
         </div>
       )}
 
       {/* Display the list of transactions */}
-      {/* ... (Your existing code for displaying transactions) */}
+      <ul>
+        {transactions.map((transaction, index) => (
+          <li key={index}>
+            {transaction.type === 'credit' ? 'Credit' : 'Debit'}: ${transaction.amount} - {transaction.description} (Note: {transaction.note})
+          </li>
+        ))}
+      </ul>
     </TransactionHistoryContainer>
   );
 };

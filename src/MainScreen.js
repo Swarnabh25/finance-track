@@ -1,10 +1,8 @@
 // In MainScreen.js
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import TransactionHistory from './TransactionHistory';
-import ExpenseSummary from './ExpenseSummary';
 import BudgetTracker from './BudgetTracker';
-import SavingsTracker from './SavingsTracker';
 
 const MainContainer = styled.div`
   display: flex;
@@ -21,23 +19,24 @@ const MainContent = styled.div`
 `;
 
 const MainScreen = () => {
+  const [netAssets, setNetAssets] = useState(0);
+
+  // Callback function to update net assets
+  const updateNetAssets = (amount) => {
+    setNetAssets((prevNetAssets) => prevNetAssets + amount);
+  };
+
   return (
     <MainContainer>
       <h2>Welcome to Finance Tracker!</h2>
       <MainContent>
         {/* Transaction History */}
-        <TransactionHistory />
-
-        {/* Expense Summary */}
-        <ExpenseSummary />
+        <TransactionHistory updateNetAssets={updateNetAssets} />
 
         {/* Budget Tracker */}
-        <BudgetTracker />
+        <BudgetTracker netAssets={netAssets} />
 
-        {/* Savings Tracker */}
-        <SavingsTracker />
-
-        {/* Add more components as needed */}
+        {/* ... (Other components) */}
       </MainContent>
     </MainContainer>
   );

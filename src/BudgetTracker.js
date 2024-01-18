@@ -6,12 +6,10 @@ const BudgetTrackerContainer = styled.div`
   margin-top: 20px;
 `;
 
-const BudgetTracker = () => {
-  // State for managing user input
+const BudgetTracker = ({ netAssets }) => {
   const [assets, setAssets] = useState(0);
   const [liabilities, setLiabilities] = useState(0);
 
-  // Function to update assets and liabilities
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'assets') {
@@ -21,21 +19,18 @@ const BudgetTracker = () => {
     }
   };
 
-  // Calculate net assets
-  const netAssets = assets - liabilities;
+  const updatedNetAssets = assets - liabilities + netAssets;
 
   return (
     <BudgetTrackerContainer>
       <h3>Budget Tracker</h3>
-      {/* Input fields for assets and liabilities */}
       <label htmlFor="assets">Assets: $</label>
       <input type="number" id="assets" name="assets" value={assets} onChange={handleInputChange} />
 
       <label htmlFor="liabilities">Liabilities: $</label>
       <input type="number" id="liabilities" name="liabilities" value={liabilities} onChange={handleInputChange} />
 
-      {/* Display net assets */}
-      <p>Net Assets: ${netAssets}</p>
+      <p>Net Assets: ${updatedNetAssets}</p>
     </BudgetTrackerContainer>
   );
 };
